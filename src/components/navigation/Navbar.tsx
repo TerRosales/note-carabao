@@ -1,49 +1,25 @@
-"use client"
-import React, { useEffect, useState } from "react";
-import styles from "@/styles/navigation/Navbar.module.css"
+"use client";
+
+import React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import styles from "@/styles/navigation/Navbar.module.css";
 
 interface NavItem {
   id: string;
   label: string;
+  href: string; // Required for external links
 }
 
 const Navbar: React.FC = () => {
-  const [activeSection, setActiveSection] = useState<string>("home");
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = document.querySelectorAll<HTMLElement>("section");
-      const scrollPosition = window.scrollY;
-
-      sections.forEach((section) => {
-        const offsetTop = section.offsetTop - 100;
-        const offsetBottom = offsetTop + section.offsetHeight;
-        const sectionId = section.getAttribute("id");
-
-        if (sectionId && scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
-          setActiveSection(sectionId);
-        }
-      });
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault();
-    const target = document.getElementById(id);
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  const pathname = usePathname(); // Get the current route
 
   const navItems: NavItem[] = [
-    { id: "home", label: "Home" },
-    { id: "about", label: "About Me" },
-    { id: "services", label: "Services" },
-    { id: "testimonials", label: "Testimonials" },
-    { id: "contact", label: "Contact" },
+    { id: "home", label: "Home", href: "/" },
+    { id: "about", label: "About Me", href: "/sections/about" },
+    { id: "portfolio", label: "Portfolio", href: "/sections/portfolio" },
+    { id: "chatter", label: "Chatter", href: "/sections/chatter" },
+    { id: "contact", label: "Contact", href: "/sections/contact" },
   ];
 
   return (
@@ -51,15 +27,14 @@ const Navbar: React.FC = () => {
       <ul className={styles.navMenu}>
         {navItems.map((item) => (
           <li key={item.id}>
-            <a
-              href={`#${item.id}`}
+            <Link
+              href={item.href}
               className={`${styles.dot} ${
-                activeSection === item.id ? styles.active : ""
+                pathname === item.href ? styles.active : ""
               }`}
-              onClick={(e) => handleClick(e, item.id)}
             >
               <span>{item.label}</span>
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

@@ -44,8 +44,10 @@ const Navbar: React.FC = () => {
       {/* Navigation Menu */}
       <ul
         className={`list-none p-0 m-0 transition-all duration-300 ease-in-out ${
-          isOpen ? "block opacity-100 translate-y-0" : "hidden opacity-0 translate-y-4"
-        } md:block`}
+          isOpen
+            ? "block opacity-100 translate-y-0"
+            : "hidden opacity-0 translate-y-4 md:opacity-100 md:translate-y-0 md:block"
+        }`}
       >
         {navItems.map((item) => {
           const isActive = pathname === item.href;

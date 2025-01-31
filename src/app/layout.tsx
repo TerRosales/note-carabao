@@ -17,7 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {/* Logo */}
-        <div className="fixed top-4 left-4 md:right-4 md:left-auto z-[1000]">
+        <div className="fixed top-4 right-4 md:left-4 md:right-auto z-[1000] md:mt-6 md:ml-6">
           <Image
             src="/note-carabao-logo.jpg"
             alt="Note Carabao Logo"

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
 import Navbar from "@/components/navigation/Navbar";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Note Carabao",
@@ -15,11 +16,23 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Navbar/>
-        <main>
-        {children}
+        {/* Logo */}
+        <div className="fixed top-4 left-4 md:right-4 md:left-auto z-[1000]">
+          <Image
+            src="/note-carabao-logo.jpg"
+            alt="Note Carabao Logo"
+            width={100} // Adjust width as needed
+            height={100} // Adjust height as needed
+            className="w-20 h-auto md:w-24 transition-all duration-300 rounded-2xl"
+            priority
+          />
+        </div>
 
-        </main>
+        {/* Navbar */}
+        <Navbar />
+
+        {/* Main Content */}
+        <main>{children}</main>
       </body>
     </html>
   );

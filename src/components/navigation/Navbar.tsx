@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { HiOutlineMenuAlt3 } from "react-icons/hi"; // Hamburger menu icon
-import { IoClose } from "react-icons/io5"; // Close button icon
+import { HiOutlineMenuAlt3 } from "react-icons/hi";
+import { IoClose } from "react-icons/io5";
 
 interface NavItem {
   id: string;
@@ -18,7 +18,6 @@ const Navbar: React.FC = () => {
 
   const navItems: NavItem[] = [
     { id: "home", label: "Home", href: "/" },
-    { id: "about", label: "About Me", href: "/sections/about" },
     { id: "portfolio", label: "Portfolio", href: "/sections/portfolio" },
     { id: "chatter", label: "Chatter", href: "/sections/chatter" },
     { id: "contact", label: "Contact", href: "/sections/contact" },
@@ -26,22 +25,27 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="fixed top-1/2 right-12 -translate-y-1/2 z-[999]">
-      {/* Toggle Button (Hamburger & Close Icon) */}
+      {/* Toggle Button */}
       <button
-        className="md:hidden bg-white border border-black  p-2 rounded-md transition hover:scale-110 -translate-y-4
-        "
+        className={`md:hidden bg-white border border-black p-2 rounded-md -translate-y-5 transition-transform duration-300 ease-in-out transform 
+          ${isOpen ? "rotate-180 scale-110" : "rotate-0 scale-100"}
+        `}
         onClick={() => setIsOpen(!isOpen)}
       >
-        {isOpen ? (
-          <IoClose className="text-black text-3xl" /> // Close button
-        ) : (
-          <HiOutlineMenuAlt3 className="text-black text-3xl" /> // Hamburger icon
-        )}
+        <span className="transition-transform duration-300 ease-in-out">
+          {isOpen ? (
+            <IoClose className="text-black text-3xl transform scale-110" />
+          ) : (
+            <HiOutlineMenuAlt3 className="text-black text-3xl transform scale-100" />
+          )}
+        </span>
       </button>
 
       {/* Navigation Menu */}
       <ul
-        className={`list-none p-0 m-0 ${isOpen ? "block" : "hidden"} md:block`}
+        className={`list-none p-0 m-0 transition-all duration-300 ease-in-out ${
+          isOpen ? "block opacity-100 translate-y-0" : "hidden opacity-0 translate-y-4"
+        } md:block`}
       >
         {navItems.map((item) => {
           const isActive = pathname === item.href;

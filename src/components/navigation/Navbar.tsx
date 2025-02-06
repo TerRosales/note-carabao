@@ -63,7 +63,7 @@ const Navbar: React.FC = () => {
                   className={`inline-block transition-all px-5 py-2 rounded-sm w-full text-center border hover:bg-black hover:text-white hover:border-t-2 hover:border-l-2 hover:border-white ${
                     isActive
                       ? "opacity-100 bg-black text-white border-t-2 border-l-2 border-white translate-x-0 shadow-lg shadow-gray-900/50 scale-105"
-                      : "bg-white/80 text-black border-b-2 border-r-2 border-black translate-x-8 hover:opacity-100 hover:translate-x-0"
+                      : "bg-white/70 text-black border-b-2 border-r-2 border-black translate-x-8 hover:bg-black/60 hover:opacity-100 hover:translate-x-0"
                   }`}
                 >
                   <p className="text-lg">{item.label}</p>

@@ -68,7 +68,7 @@ const SignIn = () => {
             href="/sections/onboarding/sign-up"
             className="text-blue-600 hover:underline"
           >
-            Sign Up7
+            Sign Up
           </Link>
         </p>
       </div>

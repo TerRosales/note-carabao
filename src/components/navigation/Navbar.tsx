@@ -1,10 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
+import { FaUserCircle } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion"; // Import Framer Motion
 
 interface NavItem {
   id: string;
@@ -12,20 +14,61 @@ interface NavItem {
   href: string;
 }
 
+const dropdownVariants = {
+  hidden: { opacity: 0, y: -10, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.3, ease: "easeInOut" },
+  },
+  exit: {
+    opacity: 0,
+    y: -10,
+    scale: 0.95,
+    transition: { duration: 0.2, ease: "easeInOut" },
+  },
+};
+
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const profileRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
-  const navItems: NavItem[] = [
-    { id: "home", label: "Home", href: "/" },
-    { id: "manager", label: "Manager", href: "/sections/manager" },
-    { id: "portfolio", label: "Portfolio", href: "/sections/portfolio" },
-    { id: "chatter", label: "Chatter", href: "/sections/chatter" },
-    { id: "contact", label: "Contact", href: "/sections/contact" },
-  ];
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        profileRef.current &&
+        !profileRef.current.contains(event.target as Node)
+      ) {
+        setIsProfileOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // Define menu items based on authentication state
+  const navItems: NavItem[] = isAuthenticated
+    ? [
+        { id: "manager", label: "Manager", href: "/sections/manager" },
+        { id: "portfolio", label: "Portfolio", href: "/sections/portfolio" },
+        { id: "chatter", label: "Chatter", href: "/sections/chatter" },
+      ]
+    : [
+        { id: "home", label: "Home", href: "/" },
+        { id: "portfolio", label: "Portfolio", href: "/sections/portfolio" },
+        { id: "chatter", label: "Chatter", href: "/sections/chatter" },
+        { id: "contact", label: "Contact", href: "/sections/contact" },
+      ];
 
   return (
-    <nav className="fixed top-1/2 right-12 -translate-y-1/2 z-[999]">
+    <nav className="fixed top-1/2 right-12 -translate-y-1/2 translate-x-8 z-[999]">
       {/* Toggle Button */}
       <button
         className={`md:hidden bg-white border border-black p-2 rounded-md -translate-y-5 transition-transform duration-300 ease-in-out transform 
@@ -60,11 +103,13 @@ const Navbar: React.FC = () => {
                 className="block w-36 text-center transition-all"
               >
                 <span
-                  className={`inline-block transition-all px-5 py-2 rounded-sm w-full text-center border hover:bg-black hover:text-white hover:border-t-2 hover:border-l-2 hover:border-white ${
-                    isActive
-                      ? "opacity-100 bg-black text-white border-t-2 border-l-2 border-white translate-x-0 shadow-lg shadow-gray-900/50 scale-105"
-                      : "bg-white/70 text-black border-b-2 border-r-2 border-black translate-x-8 hover:bg-black/60 hover:opacity-100 hover:translate-x-0"
-                  }`}
+                  className={`inline-block transition-all px-5 py-2 rounded-sm w-full text-center border duration-300 ease-in-out
+                    ${
+                      isActive
+                        ? "bg-black text-white border-t-2 border-l-2 border-white shadow-lg shadow-gray-900/50 scale-105"
+                        : "bg-white text-black border-b-2 border-r-2 border-black translate-x-8 hover:bg-black hover:text-white hover:border-white hover:translate-x-0"
+                    }
+                    active:scale-95`}
                 >
                   <p className="text-lg">{item.label}</p>
                 </span>
@@ -72,6 +117,93 @@ const Navbar: React.FC = () => {
             </li>
           );
         })}
+
+        {/* Sign In / Profile Menu */}
+        <li className="mt-4 text-right relative" ref={profileRef}>
+          {isAuthenticated ? (
+            <div className="relative inline-block">
+              {/* Profile Button (Styled + Hover Effects) */}
+              <button
+                onClick={() => setIsProfileOpen(!isProfileOpen)}
+                className="flex items-center justify-center space-x-3 px-5 py-2 rounded-sm w-36 border duration-300 ease-in-out
+                bg-black text-white border-t-2 border-l-2 border-white shadow-lg shadow-gray-900/50 scale-105
+                hover:bg-white hover:text-black hover:border-black active:scale-95"
+              >
+                <FaUserCircle className="text-2xl" />
+                <span>Profile</span>
+              </button>
+
+              {/* Animated Dropdown */}
+              <AnimatePresence>
+                {isProfileOpen && (
+                  <motion.div
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    variants={dropdownVariants}
+                    className="absolute right-0 mt-2 w-48 bg-white shadow-lg border border-gray-300 rounded-md overflow-hidden"
+                  >
+                    <ul className="text-black">
+                      <li>
+                        <Link
+                          href="/manage/fitness-tracker"
+                          className="block px-4 py-2 hover:bg-gray-200"
+                        >
+                          Manage Fitness Tracker
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="/manage/blog"
+                          className="block px-4 py-2 hover:bg-gray-200"
+                        >
+                          Manage Blog
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="/edit/profile"
+                          className="block px-4 py-2 hover:bg-gray-200"
+                        >
+                          Edit Profile
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="/edit/portfolio"
+                          className="block px-4 py-2 hover:bg-gray-200"
+                        >
+                          Edit Portfolio
+                        </Link>
+                      </li>
+                      {/* Sign Out */}
+                      <li>
+                        <button
+                          onClick={() => {
+                            setIsAuthenticated(false);
+                            setIsProfileOpen(false);
+                          }}
+                          className="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-200"
+                        >
+                          Sign Out
+                        </button>
+                      </li>
+                    </ul>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          ) : (
+            <button
+              onClick={() => setIsAuthenticated(true)}
+              className="block w-36 text-center transition-all px-5 py-2 rounded-sm border duration-300 ease-in-out
+              bg-black text-white border-t-2 border-l-2 border-white shadow-lg shadow-gray-900/50 scale-105
+              hover:bg-white hover:text-black hover:border-black active:scale-95"
+            >
+              <p className="text-lg">Sign In</p>
+            </button>
+          )}
+        </li>
       </ul>
     </nav>
   );

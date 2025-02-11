@@ -37,12 +37,12 @@ const BlogSection = () => {
               key={post.id}
               className="bg-white dark:bg-gray-700 rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105"
             >
-              <div className="relative w-full h-48">
+              <div className="relative w-full h-50">
                 <Image
                   src={post.image}
                   alt={post.title}
-                  layout="fill"
-                  objectFit="cover"
+                  width={280}
+                  height={200}
                 />
               </div>
               <div className="p-6">

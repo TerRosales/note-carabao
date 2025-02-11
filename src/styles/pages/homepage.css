@@ -1,6 +1,52 @@
 .bg-index {
- background-image: url("/dumbell.jpg");
- background-position: center;
- background-repeat: no-repeat;
- background-size: cover;
+  background-image: url("/dumbell.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
+/* Allows the Hero Section to BG to be full visible on all screens */
+@media (max-width: 768px) {
+  .bg-index {
+    background-size: fill; /* Ensures full image visibility */
+  }
+}
+@keyframes fadeUp {
+    0% {
+      transform: translateY(20px); /* Less movement for subtlety */
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Animating each word one at a time (Faster timing) */
+  .animate-word1 {
+    animation: fadeUp 0.5s ease-out forwards;
+    animation-delay: 0.2s;
+    opacity: 0;
+  }
+  .animate-word2 {
+    animation: fadeUp 0.5s ease-out forwards;
+    animation-delay: 0.5s;
+    opacity: 0;
+  }
+  .animate-word3 {
+    animation: fadeUp 0.5s ease-out forwards;
+    animation-delay: 0.8s;
+    opacity: 0;
+  }
+  .animate-word4 {
+    animation: fadeUp 0.5s ease-out forwards;
+    animation-delay: 1.1s;
+    opacity: 0;
+  }
+  
+  /* Extra text appears after all words (Faster delay) */
+  .animate-text {
+    animation: fadeUp 0.5s ease-out forwards;
+    animation-delay: 1.5s;
+    opacity: 0;
+  }
+  

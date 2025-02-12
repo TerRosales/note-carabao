@@ -37,12 +37,12 @@ const BlogSection = () => {
               key={post.id}
               className="bg-white dark:bg-gray-700 rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105"
             >
-              <div className="relative w-full h-50">
+              <div className="w-full h-[250px] md:h-[300px] lg:h-[350px] relative">
                 <Image
                   src={post.image}
                   alt={post.title}
-                  width={280}
-                  height={200}
+                  layout="fill"
+                  objectFit="cover"
                 />
               </div>
               <div className="p-6">
@@ -60,6 +60,11 @@ const BlogSection = () => {
               </div>
             </div>
           ))}
+        </div>
+        <div className="mt-10">
+          <button className="px-6 py-3 text-lg font-medium text-white bg-blue-600 dark:bg-blue-500 rounded-md shadow-md hover:bg-blue-700 dark:hover:bg-blue-400 transition">
+            See More Posts
+          </button>
         </div>
       </div>
     </section>

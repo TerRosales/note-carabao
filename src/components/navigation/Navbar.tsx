@@ -68,7 +68,7 @@ const Navbar: React.FC = () => {
       ];
 
   return (
-    <nav className="fixed top-1/2 right-12 -translate-y-1/2 translate-x-8 z-[999]">
+    <nav className="fixed top-1/2 right-12 -translate-y-1/2 z-[999]">
       {/* Toggle Button */}
       <button
         className={`md:hidden bg-white border border-black p-2 rounded-md -translate-y-5 transition-transform duration-300 ease-in-out transform 

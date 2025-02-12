@@ -4,7 +4,7 @@ import Link from "next/link";
 
 function Logo() {
   return (
-    <div className="fixed top-4 right-4 md:left-4 md:right-auto z-[1000] md:mt-6 md:ml-6">
+    <div className="fixed top-4 right-4 z-[1000] md:mt-6 md:ml-6">
       <Link href="/">
         <Image
           src="/note-carabao-logo.jpg"

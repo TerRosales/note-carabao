@@ -38,12 +38,7 @@ const BlogSection = () => {
               className="bg-white dark:bg-gray-700 rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105"
             >
               <div className="w-full h-[250px] md:h-[300px] lg:h-[350px] relative">
-                <Image
-                  src={post.image}
-                  alt={post.title}
-                  layout="fill"
-                  objectFit="cover"
-                />
+                <Image src={post.image} alt={post.title} layout="fill" />
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white">

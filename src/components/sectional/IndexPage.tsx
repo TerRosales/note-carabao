@@ -32,7 +32,7 @@ const IndexPage = () => {
       {/* Portfolio CTA Section */}
       <section className="py-20 bg-gray-900 text-white text-center">
         <h2 className="text-2xl md:text-6xl font-bold">See What I Built</h2>
-        <p className="mt-2 text-lg">Check out my latest work 123.</p>
+        <p className="mt-2 text-lg">Check out my latest work.</p>
         <button className="mt-6 px-6 py-3 bg-blue-500 hover:bg-blue-700 transition rounded-md">
           View Portfolio
         </button>

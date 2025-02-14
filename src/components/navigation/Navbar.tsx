@@ -93,36 +93,10 @@ const Navbar: React.FC = () => {
             : "hidden opacity-0 translate-y-4 md:opacity-100 md:translate-y-0 md:block"
         }`}
       >
-        {navItems.map((item) => {
-          const isActive = pathname === item.href;
-
-          return (
-            <li key={item.id} className="mb-4 relative text-right">
-              <Link
-                href={item.href}
-                className="block w-36 text-center transition-all"
-              >
-                <span
-                  className={`inline-block transition-all px-5 py-2 rounded-sm w-full text-center border duration-300 ease-in-out
-                    ${
-                      isActive
-                        ? "bg-black text-white border-t-2 border-l-2 border-white shadow-lg shadow-gray-900/50 scale-105"
-                        : "bg-white text-black border-b-2 border-r-2 border-black translate-x-8 hover:bg-black hover:text-white hover:border-white hover:translate-x-0"
-                    }
-                    active:scale-95`}
-                >
-                  <p className="text-lg">{item.label}</p>
-                </span>
-              </Link>
-            </li>
-          );
-        })}
-
-        {/* Sign In / Profile Menu */}
-        <li className="mt-4 text-right relative" ref={profileRef}>
-          {isAuthenticated ? (
+        {/* Profile Button (Only if authenticated) */}
+        {isAuthenticated && (
+          <li className="mb-4 text-right relative" ref={profileRef}>
             <div className="relative inline-block">
-              {/* Profile Button (Styled + Hover Effects) */}
               <button
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
                 className="flex items-center justify-center space-x-3 px-5 py-2 rounded-sm w-36 border duration-300 ease-in-out
@@ -141,7 +115,7 @@ const Navbar: React.FC = () => {
                     animate="visible"
                     exit="exit"
                     variants={dropdownVariants}
-                    className="absolute right-0 mt-2 w-48 bg-white shadow-lg border border-gray-300 rounded-md overflow-hidden"
+                    className="absolute z-20 right-0 mt-2 w-48 bg-white shadow-lg border border-gray-300 rounded-md overflow-hidden"
                   >
                     <ul className="text-black">
                       <li>
@@ -193,7 +167,38 @@ const Navbar: React.FC = () => {
                 )}
               </AnimatePresence>
             </div>
-          ) : (
+          </li>
+        )}
+
+        {/* Navigation Items */}
+        {navItems.map((item) => {
+          const isActive = pathname === item.href;
+
+          return (
+            <li key={item.id} className="mb-4 relative text-right">
+              <Link
+                href={item.href}
+                className="block w-36 text-center transition-all"
+              >
+                <span
+                  className={`inline-block transition-all px-5 py-2 rounded-sm w-full text-center border duration-300 ease-in-out
+                    ${
+                      isActive
+                        ? "bg-black text-white border-t-2 border-l-2 border-white shadow-lg shadow-gray-900/50 scale-105"
+                        : "bg-white text-black border-b-2 border-r-2 border-black translate-x-8 hover:bg-black hover:text-white hover:border-white hover:translate-x-0"
+                    }
+                    active:scale-95`}
+                >
+                  <p className="text-lg">{item.label}</p>
+                </span>
+              </Link>
+            </li>
+          );
+        })}
+
+        {/* Sign In Button (Only if NOT authenticated) */}
+        {!isAuthenticated && (
+          <li className="mt-4 text-right">
             <button
               onClick={() => setIsAuthenticated(true)}
               className="block w-36 text-center transition-all px-5 py-2 rounded-sm border duration-300 ease-in-out
@@ -202,8 +207,8 @@ const Navbar: React.FC = () => {
             >
               <p className="text-lg">Sign In</p>
             </button>
-          )}
-        </li>
+          </li>
+        )}
       </ul>
     </nav>
   );

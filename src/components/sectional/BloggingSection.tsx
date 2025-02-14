@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 
 const blogPosts = [
@@ -38,12 +39,14 @@ const BlogSection = () => {
               className="bg-white dark:bg-gray-700 rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105"
             >
               <div className="w-full h-[250px] md:h-[300px] relative">
+
                 <Image
                   src={post.image}
                   alt={post.title}
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+
 
                 />
               </div>

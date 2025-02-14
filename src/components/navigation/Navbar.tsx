@@ -72,8 +72,7 @@ const Navbar: React.FC = () => {
       {/* Toggle Button */}
       <button
         className={`md:hidden bg-white border border-black p-2 rounded-md -translate-y-5 transition-transform duration-300 ease-in-out transform 
-          ${isOpen ? "rotate-180 scale-110" : "rotate-0 scale-100"}
-        `}
+          ${isOpen ? "rotate-180 scale-110" : "rotate-0 scale-100"}`}
         onClick={() => setIsOpen(!isOpen)}
       >
         <span className="transition-transform duration-300 ease-in-out">
@@ -107,7 +106,6 @@ const Navbar: React.FC = () => {
                 <span>Profile</span>
               </button>
 
-              {/* Animated Dropdown */}
               <AnimatePresence>
                 {isProfileOpen && (
                   <motion.div
@@ -116,6 +114,7 @@ const Navbar: React.FC = () => {
                     exit="exit"
                     variants={dropdownVariants}
                     className="absolute z-20 right-0 mt-2 w-48 bg-white shadow-lg border border-gray-300 rounded-md overflow-hidden"
+
                   >
                     <ul className="text-black">
                       <li>
@@ -199,6 +198,7 @@ const Navbar: React.FC = () => {
         {/* Sign In Button (Only if NOT authenticated) */}
         {!isAuthenticated && (
           <li className="mt-4 text-right">
+
             <button
               onClick={() => setIsAuthenticated(true)}
               className="block w-36 text-center transition-all px-5 py-2 rounded-sm border duration-300 ease-in-out

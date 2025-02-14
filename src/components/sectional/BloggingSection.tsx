@@ -1,4 +1,5 @@
 "use client";
+import { section } from "framer-motion/client";
 import Image from "next/image";
 
 const blogPosts = [
@@ -24,55 +25,67 @@ const blogPosts = [
 
 const BlogSection = () => {
   return (
-    <section className="py-20 bg-gray-100 dark:bg-gray-900">
-      <div className="container mx-auto px-6 md:px-12 lg:px-20 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
-          Latest Blog Posts
-        </h2>
-        <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">
-          Tips and strategies for a better you.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-          {blogPosts.map((post) => (
-            <div
-              key={post.id}
-              className="bg-white dark:bg-gray-700 rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105"
-            >
-              <div className="w-full h-[250px] md:h-[300px] relative">
-
-                <Image
-                  src={post.image}
-                  alt={post.title}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-
-
-                />
-              </div>
-
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                  {post.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 mt-2">
-                  {post.body.length > 80
-                    ? `${post.body.substring(0, 80)}...`
-                    : post.body}
-                </p>
-                <button className="mt-4 text-blue-600 dark:text-blue-400 font-medium hover:underline">
-                  Read More
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="mt-10">
-          <button className="px-6 py-3 text-lg font-medium text-white bg-blue-600 dark:bg-blue-500 rounded-md shadow-md hover:bg-blue-700 dark:hover:bg-blue-400 transition">
-            See More Posts
-          </button>
-        </div>
+    <section className="pb-6">
+      <div className="custom-shape-divider-top-1739550731">
+        <svg
+          data-name="Layer 1"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M1200 0L0 0 598.97 114.72 1200 0z"
+            className="shape-fill"
+          ></path>
+        </svg>
       </div>
+      <section className="py-20 bg-gray-100 dark:bg-gray-900">
+        <div className="container mx-auto px-6 md:px-12 lg:px-20 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+            Latest Blog Posts
+          </h2>
+          <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">
+            Tips and strategies for a better you.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+            {blogPosts.map((post) => (
+              <div
+                key={post.id}
+                className="bg-white dark:bg-gray-700 rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105"
+              >
+                <div className="w-full h-[250px] md:h-[300px] relative">
+                  <Image
+                    src={post.image}
+                    alt={post.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </div>
+
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                    {post.title}
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-300 mt-2">
+                    {post.body.length > 80
+                      ? `${post.body.substring(0, 80)}...`
+                      : post.body}
+                  </p>
+                  <button className="mt-4 text-blue-600 dark:text-blue-400 font-medium hover:underline">
+                    Read More
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-10">
+            <button className="px-6 py-3 text-lg font-medium text-white bg-blue-600 dark:bg-blue-500 rounded-md shadow-md hover:bg-blue-700 dark:hover:bg-blue-400 transition">
+              See More Posts
+            </button>
+          </div>
+        </div>
+      </section>
     </section>
   );
 };

@@ -2,7 +2,7 @@ import React from "react";
 
 function FitnessSection() {
   return (
-    <section className="py-20 bg-white dark:bg-gray-800">
+    <section className="py-20 bg-black">
       <div className="container mx-auto text-center">
         <h2 className="text-3xl md:text-4xl font-bold">Track Your Progress</h2>
         <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">

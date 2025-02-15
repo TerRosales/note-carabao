@@ -6,19 +6,6 @@ import HeroSection from "./HeroSection";
 
 const IndexPage = () => {
   return (
-    // <div>
-    //   <section>
-    //     <h1>Index Page</h1>
-    //   </section>
-    //   <section>
-    //     <Link
-    //       href="/sections/onboarding/sign-in"
-    //       className="hover:text-blue-600"
-    //     >
-    //       Sign In
-    //     </Link>
-    //   </section>
-    // </div>
     <div className="w-full min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white">
       {/* Hero Section */}
       <HeroSection />
@@ -30,8 +17,22 @@ const IndexPage = () => {
       <BlogSection />
 
       {/* Portfolio CTA Section */}
+
       <div className="relative">
-        <section className="py-20 dark:bg-black/60 text-white/80 text-center">
+        <div className="custom-shape-divider-top-1739630697">
+          <svg
+            data-name="Layer 1"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1200 120"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M1200 0L0 0 892.25 114.72 1200 0z"
+              className="shape-fill"
+            ></path>
+          </svg>
+        </div>
+        <section className="py-[12%] dark:bg-black/60 text-white/80 text-center">
           <h2 className="text-2xl mt-16 md:text-6xl font-bold">
             See What I Built
           </h2>

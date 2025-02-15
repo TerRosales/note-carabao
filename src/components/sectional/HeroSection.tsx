@@ -21,7 +21,7 @@ function HeroSection() {
   return (
     <section>
       <section className="relative flex flex-col items-start justify-center text-left px-8 h-[48vh] md:h-[75vh] bg-index">
-        <div className="custom-shape-divider-bottom-1739608965">
+        <div className="custom-shape-divider-bottom-1739608965 translate-y-[1.2px]">
           <svg
             data-name="Layer 1"
             xmlns="http://www.w3.org/2000/svg"

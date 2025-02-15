@@ -25,8 +25,8 @@ const blogPosts = [
 
 const BlogSection = () => {
   return (
-    <section className="pb-6">
-      <div className="custom-shape-divider-top-1739550731">
+    <section className="pb-6 dark:bg-gray-900">
+      <div className="custom-shape-divider-top-1739630101">
         <svg
           data-name="Layer 1"
           xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +34,7 @@ const BlogSection = () => {
           preserveAspectRatio="none"
         >
           <path
-            d="M1200 0L0 0 598.97 114.72 1200 0z"
+            d="M1200 0L0 0 892.25 114.72 1200 0z"
             className="shape-fill"
           ></path>
         </svg>

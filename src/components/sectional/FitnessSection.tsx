@@ -25,7 +25,7 @@ function FitnessSection() {
           ].map((item, index) => (
             <div
               key={index}
-              className="relative group w-full h-52 bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden cursor-pointer"
+              className="relative group w-full h-20 md:h-52 bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden cursor-pointer"
             >
               {/* Default Card Content */}
               <div className="absolute inset-0 flex items-center justify-center text-xl font-semibold">

@@ -51,7 +51,7 @@ const BlogSection = () => {
             {blogPosts.map((post) => (
               <div
                 key={post.id}
-                className="bg-white dark:bg-gray-700 rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105"
+                className="bg-white dark:bg-gray-950 md:h-auto rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105"
               >
                 <div className="w-full h-[250px] md:h-[300px] relative">
                   <Image

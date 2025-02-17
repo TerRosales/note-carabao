@@ -32,13 +32,13 @@ const IndexPage = () => {
             ></path>
           </svg>
         </div>
-        <section className="py-[12%] dark:bg-black/60 text-white/80 text-center">
-          <h2 className="text-2xl mt-16 md:text-6xl font-bold">
+        <section className="py-[12%] dark:bg-black/60 text-white/80 text-center pt-20">
+          <h2 className="text-2xl mt-16 pt-10 md:text-6xl font-bold">
             See What I Built
           </h2>
           <p className="mt-2 text-lg">Check out my latest work.</p>
           <button className="mt-6 px-6 py-3 bg-blue-500 hover:bg-blue-700 transition rounded-md">
-            View Portfolio
+            View Sample App
           </button>
         </section>
       </div>

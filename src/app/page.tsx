@@ -1,5 +1,4 @@
-import IndexPage from "@/components/sectional/IndexPage";
-
+import IndexPage from "@/components/sectional/home/IndexPage";
 export default function Home() {
   return (
     <div className="">

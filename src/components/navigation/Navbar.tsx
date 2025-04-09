@@ -5,13 +5,24 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
-import { FaUserCircle } from "react-icons/fa";
-import { motion, AnimatePresence } from "framer-motion"; // Import Framer Motion
+import {
+  FaUserCircle,
+  FaHome,
+  FaBriefcase,
+  FaComments,
+  FaEnvelope,
+  FaTasks,
+  FaCompressArrowsAlt,
+  FaExpandArrowsAlt
+} from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
 
+// ✅ FIXED: icon typed as ReactElement so cloneElement works cleanly
 interface NavItem {
   id: string;
   label: string;
   href: string;
+  icon: React.ReactElement;
 }
 
 const dropdownVariants = {
@@ -34,41 +45,69 @@ const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const profileRef = useRef<HTMLDivElement>(null);
+  const [isShrunk, setIsShrunk] = useState(false);
+  const [blinkDone, setBlinkDone] = useState(false);
+
+  // ✅ FIXED: HTMLLIElement matches the <li> ref below
+  const profileRef = useRef<HTMLLIElement>(null);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
   const pathname = usePathname();
+
+  // Initial 15-second shrink timer on mount
+  useEffect(() => {
+    timerRef.current = setTimeout(() => setIsShrunk(true), 15000);
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
 
   // Close dropdown when clicking outside
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        profileRef.current &&
-        !profileRef.current.contains(event.target as Node)
-      ) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
         setIsProfileOpen(false);
       }
-    }
+    };
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
-  // Define menu items based on authentication state
+  // Blinking Animation: Stop after 4 blinks
+  useEffect(() => {
+    const blinkTimer = setTimeout(() => {
+      setBlinkDone(true);
+    }, 8000);
+    return () => clearTimeout(blinkTimer);
+  }, []);
+
+  // ✅ navItems now have icons typed as ReactElement
   const navItems: NavItem[] = isAuthenticated
     ? [
-        { id: "manager", label: "Manager", href: "/sections/manager" },
-        { id: "portfolio", label: "Portfolio", href: "/sections/portfolio" },
-        { id: "chatter", label: "Chatter", href: "/sections/chatter" },
+        { id: "manager", label: "Manager", href: "/sections/manager", icon: <FaTasks /> },
+        { id: "portfolio", label: "Portfolio", href: "/sections/portfolio", icon: <FaBriefcase /> },
+        { id: "chatter", label: "Chatter", href: "/sections/chatter", icon: <FaComments /> },
       ]
     : [
-        { id: "home", label: "Home", href: "/" },
-        { id: "portfolio", label: "Portfolio", href: "/sections/portfolio" },
-        { id: "chatter", label: "Chatter", href: "/sections/chatter" },
-        { id: "contact", label: "Contact", href: "/sections/contact" },
+        { id: "home", label: "Home", href: "/", icon: <FaHome /> },
+        { id: "portfolio", label: "Portfolio", href: "/sections/portfolio", icon: <FaBriefcase /> },
+        { id: "chatter", label: "Chatter", href: "/sections/chatter", icon: <FaComments /> },
+        { id: "contact", label: "Contact", href: "/sections/contact", icon: <FaEnvelope /> },
       ];
 
   return (
-    <nav className="fixed top-1/2 right-12 -translate-y-1/2 z-[999]">
+    <nav className="fixed top-1/2 right-12 -translate-y-1/2 z-[999] flex items-center">
+      {/* Floating Shrink Button */}
+      <button
+        onClick={() => setIsShrunk((prev) => !prev)}
+        className={`absolute -left-16 w-10 h-10 flex items-center justify-center rounded-full bg-black text-white z-[999] transition-opacity duration-300
+          ${blinkDone ? "opacity-20" : "animate-blink"}`}
+        title={isShrunk ? "Expand Menu" : "Shrink Menu"}
+      >
+        {isShrunk ? <FaExpandArrowsAlt size={24} /> : <FaCompressArrowsAlt size={24} />}
+      </button>
+
       {/* Toggle Button */}
       <button
         className={`md:hidden bg-white border border-black p-2 rounded-md -translate-y-5 transition-transform duration-300 ease-in-out transform 
@@ -77,9 +116,9 @@ const Navbar: React.FC = () => {
       >
         <span className="transition-transform duration-300 ease-in-out">
           {isOpen ? (
-            <IoClose className="text-black text-3xl transform scale-110" />
+            <IoClose className="text-black" size={24} />
           ) : (
-            <HiOutlineMenuAlt3 className="text-black text-3xl transform scale-100" />
+            <HiOutlineMenuAlt3 className="text-black" size={24} />
           )}
         </span>
       </button>
@@ -98,58 +137,44 @@ const Navbar: React.FC = () => {
             <div className="relative inline-block">
               <button
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
-                className="flex items-center justify-center space-x-3 px-5 py-2 rounded-sm w-36 border duration-300 ease-in-out
+                className={`flex items-center justify-center space-x-3 px-5 py-2 rounded-sm ${isShrunk ? "w-12 h-12 p-0" : "w-36"} border duration-300 ease-in-out
                 bg-black text-white border-t-2 border-l-2 border-white shadow-lg shadow-gray-900/50 scale-105
-                hover:bg-white hover:text-black hover:border-black active:scale-95"
+                hover:bg-white hover:text-black hover:border-black active:scale-95`}
               >
-                <FaUserCircle className="text-2xl" />
-                <span>Profile</span>
+                <FaUserCircle size={24} />
+                {!isShrunk && <span>Profile</span>}
               </button>
 
               <AnimatePresence>
-                {isProfileOpen && (
+                {isProfileOpen && !isShrunk && (
                   <motion.div
                     initial="hidden"
                     animate="visible"
                     exit="exit"
                     variants={dropdownVariants}
                     className="absolute z-20 right-0 mt-2 w-48 bg-white shadow-lg border border-gray-300 rounded-md overflow-hidden"
-
                   >
                     <ul className="text-black">
                       <li>
-                        <Link
-                          href="/manage/fitness-tracker"
-                          className="block px-4 py-2 hover:bg-gray-200"
-                        >
+                        <Link href="/manage/fitness-tracker" className="block px-4 py-2 hover:bg-gray-200">
                           Manage Fitness Tracker
                         </Link>
                       </li>
                       <li>
-                        <Link
-                          href="/manage/blog"
-                          className="block px-4 py-2 hover:bg-gray-200"
-                        >
+                        <Link href="/manage/blog" className="block px-4 py-2 hover:bg-gray-200">
                           Manage Blog
                         </Link>
                       </li>
                       <li>
-                        <Link
-                          href="/edit/profile"
-                          className="block px-4 py-2 hover:bg-gray-200"
-                        >
+                        <Link href="/edit/profile" className="block px-4 py-2 hover:bg-gray-200">
                           Edit Profile
                         </Link>
                       </li>
                       <li>
-                        <Link
-                          href="/edit/portfolio"
-                          className="block px-4 py-2 hover:bg-gray-200"
-                        >
+                        <Link href="/edit/portfolio" className="block px-4 py-2 hover:bg-gray-200">
                           Edit Portfolio
                         </Link>
                       </li>
-                      {/* Sign Out */}
                       <li>
                         <button
                           onClick={() => {
@@ -175,20 +200,21 @@ const Navbar: React.FC = () => {
 
           return (
             <li key={item.id} className="mb-4 relative text-right">
-              <Link
-                href={item.href}
-                className="block w-36 text-center transition-all"
-              >
+              <Link href={item.href} className="block text-center transition-all">
                 <span
-                  className={`inline-block transition-all px-5 py-2 rounded-sm w-full text-center border duration-300 ease-in-out
-                    ${
-                      isActive
-                        ? "bg-black text-white border-t-2 border-l-2 border-white shadow-lg shadow-gray-900/50 scale-105"
-                        : "bg-white text-black border-b-2 border-r-2 border-black translate-x-8 hover:bg-black hover:text-white hover:border-white hover:translate-x-0"
-                    }
-                    active:scale-95`}
+                  className={`flex items-center justify-center transition-all ${
+                    isShrunk ? "w-12 h-12 p-0 text-2xl" : "px-5 py-2 w-36 text-lg"
+                  } rounded-sm border duration-300 ease-in-out
+                  ${
+                    isActive
+                      ? "bg-black text-white border-t-2 border-l-2 border-white shadow-lg shadow-gray-900/50 scale-105"
+                      : "bg-white text-black border-b-2 border-r-2 border-black translate-x-8 hover:bg-black hover:text-white hover:border-white hover:translate-x-0"
+                  }
+                  active:scale-95`}
                 >
-                  <p className="text-lg">{item.label}</p>
+                  {/* ✅ Clean cloneElement without TS error */}
+                  {React.cloneElement(item.icon, { size: 24 })}
+                  {!isShrunk && <p className="ml-3">{item.label}</p>}
                 </span>
               </Link>
             </li>
@@ -198,18 +224,31 @@ const Navbar: React.FC = () => {
         {/* Sign In Button (Only if NOT authenticated) */}
         {!isAuthenticated && (
           <li className="mt-4 text-right">
-
             <button
               onClick={() => setIsAuthenticated(true)}
-              className="block w-36 text-center transition-all px-5 py-2 rounded-sm border duration-300 ease-in-out
+              className={`flex items-center justify-center transition-all ${
+                isShrunk ? "w-12 h-12 p-0 text-2xl" : "px-5 py-2 w-36 text-lg"
+              } rounded-sm border duration-300 ease-in-out
               bg-black text-white border-t-2 border-l-2 border-white shadow-lg shadow-gray-900/50 scale-105
-              hover:bg-white hover:text-black hover:border-black active:scale-95"
+              hover:bg-white hover:text-black hover:border-black active:scale-95`}
             >
-              <p className="text-lg">Sign In</p>
+              <FaUserCircle size={24} />
+              {!isShrunk && <p className="ml-3">Sign In</p>}
             </button>
           </li>
         )}
       </ul>
+
+      <style jsx>{`
+        @keyframes blink {
+          0%, 100% { opacity: 0.2; }
+          50% { opacity: 0.5; }
+        }
+
+        .animate-blink {
+          animation: blink 2s ease-in-out 4;
+        }
+      `}</style>
     </nav>
   );
 };
